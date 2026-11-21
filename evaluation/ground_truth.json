@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "description": "Authored ground truth for the endpoint patch risk agent. Deterministic world -> these expectations must hold on every run.",
+  "scenarios": {
+    "bad_patch": {
+      "patch_id": "KB-SIM-2026-002",
+      "expectations": {
+        "expected_halt_at_rings": ["RING_0", "RING_1"],
+        "expected_rca_class": "app_crash",
+        "rings_never_executed_after_stop": ["RING_3", "RING_4"],
+        "recommendation_required": true,
+        "rollback_validated": true
+      }
+    },
+    "clean_patch": {
+      "patch_id": "KB-SIM-2026-006",
+      "expectations": {
+        "at_risk_policy": "canary_prove",
+        "overall_failure_rate_below": 0.05
+      }
+    },
+    "risk_pairs": {
+      "pairs": [
+        {
+          "id": "p1_critical_server_exploited",
+          "patch_id": "KB-SIM-2026-003",
+          "endpoint": {
+            "role": "store-server", "criticality": "critical", "health_score": 50,
+            "historical_patch_failures": 3, "disk_free_gb": 40,
+            "pending_reboot_days": 0, "department": "retail-pos", "os": "windows-server-2022"
+          },
+          "dependents_count": 12,
+          "expected_bucket": "P1"
+        },
+        {
+          "id": "p2_medium_ws_on_kev_critical_patch",
+          "patch_id": "KB-SIM-2026-002",
+          "endpoint": {
+            "role": "agent-ws", "criticality": "medium", "health_score": 60,
+            "historical_patch_failures": 2, "disk_free_gb": 50,
+            "pending_reboot_days": 10, "department": "call-center", "os": "windows-10-22h2",
+            "software": []
+          },
+          "dependents_count": 0,
+          "expected_bucket": "P2"
+        },
+        {
+          "id": "p3_scanner_with_av_conflict",
+          "patch_id": "KB-SIM-2026-010",
+          "endpoint": {
+            "role": "scanner-handheld", "criticality": "medium", "health_score": 70,
+            "historical_patch_failures": 1, "disk_free_gb": 6,
+            "pending_reboot_days": 0, "department": "warehouse", "os": "windows-10-22h2",
+            "software": [{"name": "av-edr-agent", "version": "4.1.7"}]
+          },
+          "dependents_count": 0,
+          "expected_bucket": "P3"
+        },
+        {
+          "id": "p4_healthy_lab_box_moderate",
+          "patch_id": "KB-SIM-2026-016",
+          "endpoint": {
+            "role": "lab-box", "criticality": "low", "health_score": 90,
+            "historical_patch_failures": 0, "disk_free_gb": 100,
+            "pending_reboot_days": 0, "department": "it-lab", "os": "windows-11-23h2",
+            "software": []
+          },
+          "dependents_count": 0,
+          "expected_bucket": "P4"
+        }
+      ]
+    }
+  }
+}

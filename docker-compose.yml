@@ -1,0 +1,33 @@
+services:
+  patch-risk-agent:
+    build: .
+    image: patch-risk-sentinel:1.0.0
+    container_name: patch-risk-agent
+    ports:
+      - "8014:8014"
+    environment:
+      ESTATE_SIZE: "2500"
+      SIM_SEED: "1337"
+      LLM_MODE: "mock"
+      LOG_LEVEL: "INFO"
+      # Swap to PostgreSQL by overriding DATABASE_URL, e.g.:
+      # DATABASE_URL: postgresql+psycopg://patch:patch@db:5432/patch_risk
+    volumes:
+      - patch-data:/app/backend/data
+    restart: unless-stopped
+
+  # Optional Postgres for durability beyond the SQLite demo default.
+  # docker compose --profile postgres up
+  db:
+    image: postgres:16-alpine
+    profiles: ["postgres"]
+    environment:
+      POSTGRES_USER: patch
+      POSTGRES_PASSWORD: patch
+      POSTGRES_DB: patch_risk
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  patch-data:
+  pgdata:

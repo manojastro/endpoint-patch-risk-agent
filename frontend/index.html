@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patch Risk Sentinel</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">&#9632;</span>
+    <span class="brand-name">PATCH RISK SENTINEL</span>
+    <span class="brand-sub">endpoint patch risk &amp; safe rollout</span>
+  </div>
+  <div class="topbar-right">
+    <span id="mock-badge" class="badge badge-mock hidden">MOCK MODE</span>
+    <span id="estate-badge" class="badge badge-dim hidden"></span>
+    <span id="db-badge" class="badge badge-dim hidden"></span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-view="overview" class="tab active">Overview</button>
+  <button data-view="catalog" class="tab">Patch Catalog</button>
+  <button data-view="campaigns" class="tab">Campaigns</button>
+  <button data-view="ops" class="tab">Evaluation &amp; Tools</button>
+</nav>
+
+<main id="main">
+  <section id="view-overview" class="view active"></section>
+  <section id="view-catalog" class="view"></section>
+  <section id="view-campaigns" class="view"></section>
+  <section id="view-ops" class="view"></section>
+</main>
+
+<footer class="footer">
+  <span>Simulated estate &mdash; no real endpoints are touched.</span>
+  <span id="refresh-note"></span>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
